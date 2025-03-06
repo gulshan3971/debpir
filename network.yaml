@@ -1,1 +1,45 @@
-Network configuration YAML for three-org Hyperledger Fabric setup.
+name: "debpir-network"
+version: "1.0"
+
+organizations:
+  - name: "Org1"
+    mspid: "Org1MSP"
+    peers:
+      - "peer0.org1.example.com"
+      - "peer1.org1.example.com"
+
+  - name: "Org2"
+    mspid: "Org2MSP"
+    peers:
+      - "peer0.org2.example.com"
+      - "peer1.org2.example.com"
+
+  - name: "Org3"
+    mspid: "Org3MSP"
+    peers:
+      - "peer0.org3.example.com"
+      - "peer1.org3.example.com"
+
+orderers:
+  - name: "orderer.example.com"
+    url: "grpcs://orderer.example.com:7050"
+
+channels:
+  - name: "debpirchannel"
+    organizations:
+      - "Org1"
+      - "Org2"
+      - "Org3"
+
+policies:
+  Readers:
+    type: "Signature"
+    rule: "OR('Org1MSP.member', 'Org2MSP.member', 'Org3MSP.member')"
+
+  Writers:
+    type: "Signature"
+    rule: "OR('Org1MSP.member', 'Org2MSP.member', 'Org3MSP.member')"
+
+  Admins:
+    type: "Signature"
+    rule: "OR('Org1MSP.admin', 'Org2MSP.admin', 'Org3MSP.admin')"
