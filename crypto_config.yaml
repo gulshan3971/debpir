@@ -1,1 +1,37 @@
-Configuration file for cryptogen tool.
+
+Organizations:
+  - Name: Org1
+    Domain: org1.example.com
+    EnableNodeOUs: true
+    Users:
+      Count: 1
+    CA:
+      Country: US
+      Province: California
+      Locality: San Francisco
+
+  - Name: Org2
+    Domain: org2.example.com
+    EnableNodeOUs: true
+    Users:
+      Count: 1
+    CA:
+      Country: US
+      Province: California
+      Locality: San Francisco
+
+  - Name: Org3
+    Domain: org3.example.com
+    EnableNodeOUs: true
+    Users:
+      Count: 1
+    CA:
+      Country: US
+      Province: California
+      Locality: San Francisco
+
+Orderers:
+  - Name: orderer
+    Domain: example.com
+
+PeersPerOrg: 2
