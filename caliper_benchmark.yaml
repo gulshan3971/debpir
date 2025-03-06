@@ -1,1 +1,42 @@
-Hyperledger Caliper benchmark script.
+---
+test:
+  name: "DEBPIR Performance Benchmark"
+  description: "Benchmarking transaction throughput and latency for DEBPIR"
+
+monitor:
+  type: "docker"
+  docker:
+    containers:
+      - "orderer.example.com"
+      - "peer0.org1.example.com"
+      - "peer0.org2.example.com"
+      - "peer0.org3.example.com"
+
+benchmark:
+  rounds:
+    - label: "Submit Transaction Benchmark"
+      description: "Testing transaction submission rate"
+      txNumber: 1000
+      rateControl:
+        type: "fixed-rate"
+        opts:
+          tps: 100
+      workload:
+        module: "./workload/submitTransaction.js"
+
+    - label: "Query Transaction Benchmark"
+      description: "Testing transaction query performance"
+      txDuration: 60
+      rateControl:
+        type: "linear-rate"
+        opts:
+          startingTps: 10
+          finishingTps: 100
+      workload:
+        module: "./workload/queryTransaction.js"
+
+caliper:
+  blockchain: "fabric"
+  report:
+    output: "caliper-report.html"
+    format: ["html", "json"]
